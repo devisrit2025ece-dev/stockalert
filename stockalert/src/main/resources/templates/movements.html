@@ -3,6 +3,15 @@
 <head>
     <title>Stock Movements</title>
     <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        h1 {
+            color: blue;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -19,36 +28,51 @@
         }
     </style>
 </head>
+
 <body>
 
 <h1>Stock Movements</h1>
 
 <table>
+    <thead>
     <tr>
         <th>ID</th>
         <th>Product ID</th>
         <th>Quantity</th>
         <th>Type</th>
         <th>Reason</th>
+        <th>Movement Date</th>
     </tr>
+    </thead>
 
-    <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>5</td>
-        <td>OUT</td>
-        <td>Sale</td>
-    </tr>
-
-    <tr>
-        <td>2</td>
-        <td>1</td>
-        <td>20</td>
-        <td>IN</td>
-        <td>Purchase</td>
-    </tr>
-
+    <tbody id="movementTable">
+    </tbody>
 </table>
+
+<script>
+    fetch('/stock-movements')
+        .then(response => response.json())
+        .then(data => {
+
+            const table = document.getElementById("movementTable");
+
+            data.forEach(movement => {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${movement.id}</td>
+                    <td>${movement.productId}</td>
+                    <td>${movement.quantity}</td>
+                    <td>${movement.type}</td>
+                    <td>${movement.reason}</td>
+                    <td>${movement.movementDate}</td>
+                `;
+
+                table.appendChild(row);
+            });
+        });
+</script>
 
 </body>
 </html>
