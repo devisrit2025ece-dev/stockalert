@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reorder Alerts</title>
+</head>
+<body>
+
+<h1>Reorder Alerts</h1>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Product ID</th>
+        <th>Status</th>
+    </tr>
+
+    <tbody id="alertTable"></tbody>
+</table>
+
+<script>
+    fetch('/reorder-alerts')
+        .then(response => response.json())
+        .then(data => {
+
+            const table = document.getElementById("alertTable");
+
+            data.forEach(alert => {
+
+                table.innerHTML += `
+                    <tr>
+                        <td>${alert.id}</td>
+                        <td>${alert.productId}</td>
+                        <td>${alert.status}</td>
+                    </tr>
+                `;
+
+            });
+        });
+</script>
+
+</body>
+</html>
